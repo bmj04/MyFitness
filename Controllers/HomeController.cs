@@ -18,6 +18,20 @@ namespace MyFItness.Controllers
             return View();
         }
 
+        public IActionResult Presentation()
+        {
+            return View();
+        }
+        public IActionResult EnterFitnessData()
+        {
+            return View();
+        }
+
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

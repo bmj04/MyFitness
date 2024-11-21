@@ -1,0 +1,107 @@
+﻿
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.dashboard-container {
+    padding: 20px;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+    .dashboard-header h1 {
+        font-size: 2.5rem;
+        color: #007bff;
+    }
+
+    .dashboard-header p {
+        font-size: 1.2rem;
+        color: #6c757d;
+    }
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 30%;
+}
+
+    .stat-card h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #007bff;
+    }
+
+    .stat-card p {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+.actions {
+    text-align: center;
+    margin-top: 40px;
+}
+
+    .actions h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #28a745;
+    }
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+    .btn-secondary:hover {
+        background-color: #565e64;
+    }
+
+.btn-success {
+    background-color: #28a745;
+}
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+

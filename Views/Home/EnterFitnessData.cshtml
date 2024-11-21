@@ -1,0 +1,41 @@
+﻿<div class="setup-profile-container">
+    <section class="profile-setup-section">
+        <h1>Configurer Votre Profil</h1>
+        <p>Veuillez entrer vos informations pour personnaliser votre expérience.</p>
+        <form id="profileSetupForm">
+            <div class="form-group">
+                <label for="name">Nom complet :</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Votre nom" required />
+            </div>
+            <div class="form-group">
+                <label for="age">Âge :</label>
+                <input type="number" id="age" name="age" class="form-control" placeholder="Votre âge" required />
+            </div>
+            <div class="form-group">
+                <label for="weight">Poids (kg) :</label>
+                <input type="number" id="weight" name="weight" class="form-control" placeholder="Votre poids en kilogrammes" required />
+            </div>
+            <div class="form-group">
+                <label for="height">Taille (cm) :</label>
+                <input type="number" id="height" name="height" class="form-control" placeholder="Votre taille en centimètres" required />
+            </div>
+            <div class="form-group">
+                <label for="gender">Sexe :</label>
+                <select id="gender" name="gender" class="form-control">
+                    <option value="male">Homme</option>
+                    <option value="female">Femme</option>
+                    <option value="other">Autre</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="goal">Objectif :</label>
+                <select id="goal" name="goal" class="form-control">
+                    <option value="lose_weight">Perdre du poids</option>
+                    <option value="gain_muscle">Gagner du muscle</option>
+                    <option value="maintain">Maintenir le poids</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+    </section>
+</div>

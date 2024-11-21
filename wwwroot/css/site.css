@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+footer {
+    position: static;
+    margin-top: auto; 
+    padding: 1rem 0;
+}
