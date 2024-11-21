@@ -32,6 +32,11 @@ namespace MyFItness.Controllers
             return View();
         }
 
+        public IActionResult Information()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
