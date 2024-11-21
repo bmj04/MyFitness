@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+@*
+    SOURCES :
+        validation : https://www.w3schools.com/js/js_validation.asp
+                     https://www.w3schools.com/html/html_form_attributes.asp
+                     https://www.w3schools.com/jsref/jsref_obj_regexp.
+
+        Formes :     https://www.w3schools.com/howto/howto_css_responsive_form.asp
+*@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complétez Votre Profil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 2px solid #ced4da;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: #ff5722;
+                box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+            }
+
+        .valid {
+            border-color: #28a745 !important;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5) !important;
+        }
+
+        .invalid {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 5px rgba(220, 53, 69, 0.5) !important;
+        }
+
+        .btn-orange {
+            background-color: #ff5722;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-orange:hover {
+                background-color: #e64a19;
+            }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #ff5722;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Complétez Votre Profil</h1>
+        <div class="progress-container">
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+            </div>
+        </div>
+        <form id="userForm">
+            <label for="first-name">Prénom</label>
+            <input type="text" id="first-name" name="firstName" class="form-control" placeholder="Entrez votre prénom" required>
+            <div id="error-first-name" class="error">Veuillez entrer votre prénom.</div>
+
+            <label for="last-name">Nom</label>
+            <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Entrez votre nom" required>
+            <div id="error-last-name" class="error">Veuillez entrer votre nom.</div>
+
+            <label for="dob">Date de Naissance</label>
+            <input type="date" id="dob" name="dob" class="form-control" required>
+            <div id="error-dob" class="error">Veuillez sélectionner votre date de naissance.</div>
+
+            <label for="height">Taille (cm)</label>
+            <input type="number" id="height" name="height" class="form-control" placeholder="Entrez votre taille en cm" required min="50" max="300">
+            <div id="error-height" class="error">Veuillez entrer une taille valide (50-300 cm).</div>
+
+            <label for="weight">Poids (lb)</label>
+            <input type="number" id="weight" name="weight" class="form-control" placeholder="Entrez votre poids en livres" required min="20" max="600">
+            <div id="error-weight" class="error">Veuillez entrer un poids valide (20-600 lb).</div>
+
+            <label for="bf">Masse Grasse (%)</label>
+            <input type="number" id="bf" name="bf" class="form-control" placeholder="Entrez votre pourcentage de masse grasse" required min="1" max="100">
+            <div id="error-bf" class="error">Veuillez entrer un pourcentage de masse grasse valide (1-100).</div>
+
+            <label for="sex">Sexe</label>
+            <select id="sex" name="sex" class="form-select" required>
+                <option value="" disabled selected>Sélectionnez votre sexe</option>
+                <option value="male">Homme</option>
+                <option value="female">Femme</option>
+            </select>
+            <div id="error-sex" class="error">Veuillez sélectionner votre sexe.</div>
+
+            <label for="goal">Objectif</label>
+            <select id="goal" name="goal" class="form-select" required>
+                <option value="" disabled selected>Sélectionnez votre objectif</option>
+                <option value="gain_weight">Prendre du poids</option>
+                <option value="lose_weight">Perdre du poids</option>
+                <option value="maintain_weight">Maintenir le poids</option>
+                <option value="gain_muscle">Gagner du muscle</option>
+                <option value="gain_endurance">Gagner en endurance</option>
+                <option value="gain_strength">Gagner en force</option>
+            </select>
+            <div id="error-goal" class="error">Veuillez sélectionner votre objectif.</div>
+
+            <button type="submit" class="btn-orange">Suivant</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('userForm');
+        const progressBar = document.getElementById('progress-bar');
+        const fields = [
+            { id: 'first-name', errorId: 'error-first-name', validate: (value) => value.trim() !== "" },
+            { id: 'last-name', errorId: 'error-last-name', validate: (value) => value.trim() !== "" },
+            { id: 'dob', errorId: 'error-dob', validate: (value) => value !== "" },
+            { id: 'height', errorId: 'error-height', validate: (value) => value >= 50 && value <= 300 },
+            { id: 'weight', errorId: 'error-weight', validate: (value) => value >= 20 && value <= 600 },
+            { id: 'bf', errorId: 'error-bf', validate: (value) => value >= 1 && value <= 100 },
+            { id: 'sex', errorId: 'error-sex', validate: (value) => value !== "" },
+            { id: 'goal', errorId: 'error-goal', validate: (value) => value !== "" }
+        ];
+
+        function updateProgress() {
+            const completedFields = fields.filter(({ id, validate }) => validate(document.getElementById(id).value));
+            const progress = (completedFields.length / fields.length) * 100;
+            progressBar.style.width = progress + "%";
+        }
+
+        fields.forEach(({ id, errorId, validate }) => {
+            const input = document.getElementById(id);
+            const error = document.getElementById(errorId);
+
+            input.addEventListener('input', () => {
+                if (validate(input.value)) {
+                    input.classList.add('valid');
+                    input.classList.remove('invalid');
+                    error.style.display = 'none';
+                } else {
+                    input.classList.add('invalid');
+                    input.classList.remove('valid');
+                    error.style.display = 'block';
+                }
+                updateProgress();
+            });
+        });
+
+        form.addEventListener('submit', (event) => {
+            let isValid = true;
+            fields.forEach(({ id, errorId, validate }) => {
+                const input = document.getElementById(id);
+                const error = document.getElementById(errorId);
+                if (!validate(input.value)) {
+                    input.classList.add('invalid');
+                    error.style.display = 'block';
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+
+</html>
