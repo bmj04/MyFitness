@@ -1,34 +1,185 @@
-﻿<div class="dashboard-container">
-    <header class="dashboard-header">
-        <h1>Tableau de Bord</h1>
-        <p>Bienvenue, [Nom de l'utilisateur] ! Voici un aperçu de ton progrès.</p>
-    </header>
+﻿@{
+    ViewData["Title"] = "Tableau de Bord";
+}
 
-    <section class="dashboard-content">
-        <div class="stats">
-            <div class="stat-card">
-                <h2>Poids Actuel</h2>
-                <p>70 kg</p>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            display: flex;
+            gap: 30px;
+            padding: 30px;
+            flex-wrap: wrap;
+        }
+
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-panel {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h5 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #e63946;
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 5px;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: #f3f3f3;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            margin-top: 20px;
+        }
+
+        @@media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .left-panel, .right-panel {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="left-panel">
+            <div class="card">
+                <h5>Dernière Séance - Musculation</h5>
+                <p><span class="highlight">Exercice :</span> Bench Press</p>
+                <p><span class="highlight">Poids :</span> 70 kg</p>
+                <p><span class="highlight">Séries :</span> 4</p>
+                <p><span class="highlight">Répétitions :</span> 10</p>
+                <p><span class="highlight">Amélioration :</span> +15% par rapport à la séance précédente</p>
             </div>
-            <div class="stat-card">
-                <h2>Nombre d'entrainment de la semaine </h2>
-                <p>4</p>
+
+            <div class="card">
+                <h5>Dernière Séance - Cardio</h5>
+                <p><span class="highlight">Activité :</span> Course à pied</p>
+                <p><span class="highlight">Distance :</span> 5 km</p>
+                <p><span class="highlight">Durée :</span> 30 minutes</p>
+                <p><span class="highlight">Intensité :</span> Moyenne</p>
+                <p><span class="highlight">Amélioration :</span> +5% distance couverte</p>
             </div>
-            <div class="stat-card">
-                <h2>Objectif</h2>
-                <p>Perdre 5 kg</p>
+
+            <div class="card">
+                <h5>Résumé Nutritionnel - Hier</h5>
+                <p><span class="highlight">Calories Consommées :</span> 2200 kcal</p>
+                <p><span class="highlight">Objectif :</span> 2000 kcal</p>
+                <p><span class="highlight">Proétines :</span> 150 g</p>
+                <p><span class="highlight">Glucides :</span> 250 g</p>
+                <p><span class="highlight">Lipides :</span> 70 g</p>
+                <p><span class="highlight">Balance :</span> +200 kcal (excès)</p>
             </div>
         </div>
 
-        <div class="actions">
-            <h2>Actions Rapides</h2>
-            <div class="action-buttons">
-                <a href="/Workouts/Log" class="btn btn-primary">Ajouter un Entraînement</a>
-                <a href="/Nutrition/Log" class="btn btn-secondary">Enregistrer Nutrition</a>
-                <a href="/Progress" class="btn btn-success">Voir Progression</a>
-            </div>
-        </div>
-    </section>
+        <div class="right-panel">
+            <div class="card">
+                <h5>Résumé Hebdomadaire - Musculation</h5>
+                <div class="card mb-3">
+                    <h5>Squat</h5>
+                    <p><span class="highlight">Volume Total :</span> 4800 kg</p>
+                    <p><span class="highlight">Amélioration :</span> +15% Volume moyen</p>
 
-    
-</div>
+
+                    <hr />
+                    <h5>Bench Press</h5>
+                    <p><span class="highlight">Volume Total :</span> 3600 kg</p>
+                    <p><span class="highlight">Amélioration :</span> +8% Volume moyen</p>
+
+                    <hr />
+
+                    <h5>Deadlift</h5>
+                    <p><span class="highlight">Volume Total :</span> 5600 kg</p>
+                                       <p><span class="highlight">Amélioration :</span> +12% Volume moyen</p>
+
+                    <hr />
+
+                    <h5>Total</h5>
+                    <p><span class="highlight">Volume Total :</span> 5600 kg</p>
+                    <p><span class="highlight">Durée total :</span> 5H</p>
+                    <p><span class="highlight">Amélioration :</span> +5% Volume moyen</p>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <h5>Résumé Hebdomadaire - Cardio</h5>
+                <div class="card mb-3">
+                    <h5>Course à pied</h5>
+                    <p><span class="highlight">Distance Totale :</span> 30 km</p>
+                    <p><span class="highlight">Durée Totale :</span> 5 heures</p>
+                    <p><span class="highlight">Amélioration :</span> +10% distance moyenne</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h5>Résumé Hebdomadaire - Nutrition</h5>
+                <div class="card mb-3">
+                    <h5>Moyenne Quotidienne</h5>
+                    <p><span class="highlight">Calories In :</span> 15 400 kcal</p>
+                    <p><span class="highlight">Calories Out :</span> 15 000 kcal</p>
+                    <p><span class="highlight">Balance :</span> 400 kcal</p>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+</body>
+</html>
