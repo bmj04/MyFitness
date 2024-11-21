@@ -1,47 +1,181 @@
 ﻿@{
-    ViewData["Title"] = "Bienvenue sur MyFitness";
+    ViewData["Title"] = "Présentation";
 }
-<div class="presentation-page">
-    <section id="hero" class="hero-section">
-        <div class="container text-center">
-            <h1>Bienvenue sur <span>MyFitness</span></h1>
-            <p>Suivez vos entraînements, gérez votre nutrition et atteignez vos objectifs de fitness.</p>
-            <a href="/Account/Register" class="btn btn-primary btn-lg">Commencer</a>
-        </div>
-    </section>
 
-    <section id="features" class="features-section">
-        <div class="container">
-            <h2>Fonctionnalités</h2>
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <i class="bi bi-bar-chart-line"></i>
-                    <h3>Suivi de Progression</h3>
-                    <p>Visualisez votre parcours fitness avec un suivi détaillé.</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <i class="bi bi-apple"></i>
-                    <h3>Gestion de Nutrition</h3>
-                    <p>Enregistrez et surveillez votre nutrition quotidienne pour atteindre vos objectifs santé.</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <i class="bi bi-chat"></i>
-                    <h3>Chat en Temps Réel</h3>
-                    <p>Connectez-vous avec des coachs fitness et des amis en temps réel.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="cta" class="cta-section">
-        <div class="container text-center">
-            <h2>Prêt pour une Transformation ?</h2>
-            <p>Rejoignez notre communauté de passionnés de fitness et commencez votre parcours dès aujourd'hui.</p>
-            <a href="/Account/Register" class="btn btn-secondary btn-lg">Rejoindre Maintenant</a>
-        </div>
-    </section>
-
-    <footer class="footer-section text-center">
-        <p>&copy; 2023 MyFitness. Tous droits réservés.</p>
-    </footer>
+<div id="section1" class="section bg-dark">
+    <div>
+        <h1>Bienvenue sur <span class="highlight">Essential Fitness</span></h1>
+        <p class="mt-3">Votre compagnon pour une remise en forme simple, efficace et personnalisée.</p>
+        <button class="btn-orange mt-4"><i class="fas fa-play"></i> Commencez maintenant</button>
+    </div>
 </div>
+
+<div id="section2" class="section bg-light">
+    <div class="aos-fade">
+        <h1>Notre Vision</h1>
+        <p class="mt-3">Nous simplifions le fitness grâce à notre approche unique basée sur les <span class="highlight">Big 3</span> :</p>
+        <ul class="list-unstyled mt-4">
+            <li><b>Cardio :</b> Course, vélo, natation.</li>
+            <li><b>Musculation :</b> Bench, squats, deadlifts.</li>
+            <li><b>Nutrition :</b> Calories, protéines, macros.</li>
+        </ul>
+        @*<div class="progress my-3" style="height: 20px;">
+            <div class="progress-bar bg-warning" style="width: 70%;">Cardio 70%</div>
+        </div>
+         <div class="progress my-3" style="height: 20px;">
+            <div class="progress-bar bg-danger" style="width: 85%;">Musculation 85%</div>
+        </div>
+        <div class="progress my-3" style="height: 20px;">
+            <div class="progress-bar bg-success" style="width: 60%;">Nutrition 60%</div>
+        </div> *@
+        <p class="mt-4">Simplicité. Clarté. Résultats.</p>
+    </div>
+</div>
+
+<div id="section3" class="section bg-dark">
+    <div class="aos-fade">
+        <h1>Pourquoi nous choisir ?</h1>
+        <p class="mt-3">Une interface intuitive. Des outils puissants. Des résultats mesurables.</p>
+        <p>Avec <span class="highlight">Essential Fitness</span>, suivez vos progrès et dépassez vos objectifs !</p>
+        <button class="btn-orange mt-4">Découvrez nos fonctionnalités</button>
+    </div>
+</div>
+
+<div id="section4" class="section bg-light">
+    <h1>Ce que disent nos utilisateurs</h1>
+    <blockquote class="blockquote">
+        <p>"Essential Fitness a transformé ma façon de m'entraîner ! Simple et efficace."</p>
+        <footer class="blockquote-footer">Jean Dupont</footer>
+        <p>"Essential Fitness a simplifié ma routine et m'a aidé à atteindre mes objectifs plus rapidement. Clair, pratique, et motivant !."</p>
+        <footer class="blockquote-footer">Max Duroi</footer>
+    </blockquote>
+    <div class="scroll-down mt-5">&#x2191; Faites défiler &#x2191;</div>
+
+
+</div>
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+        overflow-x: hidden;
+    }
+
+    .section {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #section1 {
+        background-image: url("https://web-back.perfectgym.com/sites/default/files/styles/460x/public/equipment%20%286%29.jpg?itok=bC0T32-K");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        color: #fff;
+    }
+
+    .bg-dark {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .highlight {
+        color: #ff5722;
+    }
+
+    .btn-orange {
+        background-color: #ff5722;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-orange:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-orange:hover:after {
+            transform: translateX(0);
+        }
+
+        .btn-orange:hover {
+            background-color: #e64a19;
+        }
+
+    .scroll-down {
+        position: absolute;
+        bottom: 20px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        animation: bounce 2s infinite;
+    }
+
+    @@keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .aos-fade {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 1s ease-in-out;
+    }
+
+    .aos-active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+    document.addEventListener('scroll', () => {
+        const elements = document.querySelectorAll('.aos-fade');
+        elements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight) {
+                el.classList.add('aos-active');
+            }
+        });
+    });
+
+    document.querySelector('.btn-orange').addEventListener('click', () => {
+        document.getElementById('section2').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.querySelector('.scroll-down').addEventListener('click', () => {
+        document.getElementById('section1').scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
