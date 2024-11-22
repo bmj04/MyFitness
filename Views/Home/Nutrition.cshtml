@@ -1,5 +1,209 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Nutrition";
 }
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Nutrition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .help-section {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff5722;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .help-section:hover {
+            background-color: #ff8c42;
+            transform: scale(1.1);
+        }
+
+        .help-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .help-modal-content {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            text-align: left;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease;
+        }
+
+        .close-help {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ff5722;
+            transition: color 0.3s;
+        }
+
+        .close-help:hover {
+            color: #ff8c42;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+        }
+
+        .card {
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            height: auto;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            z-index: 1050;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        button {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -55%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .modal {
+                width: 95%;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="card">
+            <button class="btn btn-primary btn-lg" onclick="openModal()">Ajouter des Données Nutritionnelles</button>
+        </div>
+    </div>
+
+    <div class="modal" id="nutritionFormModal">
+        <h5>Ajouter les Données Nutritionnelles</h5>
+        <form method="post">
+            <div class="mb-3">
+                <label for="Calories" class="form-label">Calories</label>
+                <input type="number" class="form-control" id="Calories" name="Calories" required>
+            </div>
+            <div class="mb-3">
+                <label for="Proteins" class="form-label">Protéines (g)</label>
+                <input type="number" class="form-control" id="Proteins" name="Proteins" required>
+            </div>
+            <div class="mb-3">
+                <label for="Carbohydrates" class="form-label">Glucides (g)</label>
+                <input type="number" class="form-control" id="Carbohydrates" name="Carbohydrates" required>
+            </div>
+            <div class="mb-3">
+                <label for="Fats" class="form-label">Lipides (g)</label>
+                <input type="number" class="form-control" id="Fats" name="Fats" required>
+            </div>
+            <div class="mb-3">
+                <label for="Date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="Date" name="Date" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Enregistrer</button>
+            <button type="button" class="btn btn-secondary btn-lg" onclick="closeModal()">Annuler</button>
+        </form>
+    </div>
+
+    <div class="help-section" onclick="document.querySelector('.help-modal').style.display = 'flex';">
+        <i class="fas fa-question"></i>
+    </div>
+
+    <div class="help-modal">
+        <div class="help-modal-content">
+            <span class="close-help" onclick="document.querySelector('.help-modal').style.display = 'none';">&times;</span>
+            <h5>Besoin d'Aide ?</h5>
+            <p>Utilisez cette plateforme pour enregistrer votre nutrition.</p>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('nutritionFormModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('nutritionFormModal').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
