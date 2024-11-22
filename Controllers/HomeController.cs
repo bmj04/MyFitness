@@ -37,6 +37,11 @@ namespace MyFItness.Controllers
             return View();
         }
 
+        public IActionResult Nutrition()
+        {
+            return View();
+        }
+
         public IActionResult Information()
         {
             return View();
