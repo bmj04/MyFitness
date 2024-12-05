@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Activités";
+}
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +14,7 @@
                 flex: 1 1 100%;
                 margin-bottom: 0.5rem;
             }
+
             .d-flex > button {
                 flex: 0 0 auto;
             }
@@ -57,8 +61,8 @@
                             <label for="intensity">Intensité</label>
                             <select id="intensity" class="form-control">
                                 <option>Faible</option>
-                                <option>Moyenne</option>
-                                <option>Haute</option>
+                                <option>Modérée</option>
+                                <option>Élevée</option>
                             </select>
                         </div>
                     </form>
@@ -101,8 +105,12 @@
                             <div class="d-flex flex-column flex-md-row align-items-center mb-2">
                                 <span class="mr-md-2"> 1</span>
                                 <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Poids (lb)">
-                                <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Rép">
-                                <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Int">
+                                <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Répétitions">
+                                <select class="form-control mr-md-2 mb-2 mb-md-0">
+                                    <option>Faible</option>
+                                    <option>Modérée</option>
+                                    <option>Élevée</option>
+                                </select>
                                 <button type="button" class="btn btn-sm btn-danger">Supprimer</button>
                             </div>
                         </div>
@@ -126,17 +134,21 @@
             const newSet = document.createElement('div');
             newSet.classList.add('d-flex', 'flex-column', 'flex-md-row', 'align-items-center', 'mb-2');
             newSet.innerHTML = `
-                <span class="mr-md-2"> ${setCount}</span>
-                <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Poids (kg)">
-                <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Répétitions">
-                        <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Intensité">
+                        <span class="mr-md-2"> ${setCount}</span>
+                        <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Poids (kg)">
+                        <input type="number" class="form-control mr-md-2 mb-2 mb-md-0" placeholder="Répétitions">
+                        <select class="form-control mr-md-2 mb-2 mb-md-0">
+                            <option>Faible</option>
+                            <option>Modérée</option>
+                    <option>Élevée</option>
+                </select>
                 <button type="button" class="btn btn-sm btn-danger">Supprimer</button>
             `;
             setsTableBody.appendChild(newSet);
-            newSet.querySelector('.btn-danger').addEventListener('click', function () {
-                newSet.remove();
-            });
-        });
+                newSet.querySelector('.btn-danger').addEventListener('click', function () {
+                        newSet.remove();
+                    });
+                });
     </script>
 </body>
 </html>
