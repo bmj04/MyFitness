@@ -8,7 +8,6 @@ namespace MyFItness.Models
         public double WeightLbs { get; set; }
         public string IntensityLevel { get; set; } // "Low", "Moderate", "High"
 
-        // Navigation Property
         public virtual StrengthActivity StrengthActivity { get; set; }
     }
 }

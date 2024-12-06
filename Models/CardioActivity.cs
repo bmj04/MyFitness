@@ -13,7 +13,6 @@ namespace MyFItness.Models
         public string IntensityLevel { get; set; } // "Low", "Moderate", "High"
         public string Notes { get; set; }
 
-        // Navigation Property
         public virtual ApplicationUser User { get; set; }
     }
 }

@@ -11,7 +11,6 @@ namespace MyFItness.Models
         public string ExerciseType { get; set; } // "Bench Press", "Squats", or "Deadlifts"
         public string Notes { get; set; }
 
-        // Navigation Properties
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<StrengthSet> Sets { get; set; }
     }

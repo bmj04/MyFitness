@@ -13,7 +13,6 @@ namespace MyFItness.Models
         public double FatsGrams { get; set; }
         public string Notes { get; set; }
 
-        // Navigation Property
         public virtual ApplicationUser User { get; set; }
     }
 }

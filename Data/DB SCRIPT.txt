@@ -1,0 +1,231 @@
+IF OBJECT_ID('tempdb..#WorkoutSchedule') IS NOT NULL
+    DROP TABLE #WorkoutSchedule;
+
+DECLARE @Users TABLE (
+    UserId NVARCHAR(450),
+    Email VARCHAR(100),
+    PasswordHash NVARCHAR(MAX),
+    StrengthLevel VARCHAR(20),
+    CardioLevel VARCHAR(20),
+    CalorieGoal INT
+);
+
+INSERT INTO @Users VALUES
+    (NEWID(), 'BEGINNER@EXAMPLE.COM', 'AQAAAAIAAYagAAAAEER3rSlxjN5aLNQuXSiDtBx8LvHjDO7RSxhmVqGbYx5ix0Rp4/HT+jPmG13M0vtRjw==', 'Beginner', 'Beginner', 2000),
+    (NEWID(), 'INTERMEDIATE@EXAMPLE.COM', 'AQAAAAIAAYagAAAAEHehZctc+dSWU2fUcOGWsIHRdVkdFMorao1eSvjrn8hpUbcoUsaTai+umXIXnXT5Uw==', 'Intermediate', 'Intermediate', 2500),
+    (NEWID(), 'STRENGTH@EXAMPLE.COM', 'AQAAAAIAAYagAAAAENB1m8e6v/gm0lKUttr/K0hTxxckAd1HewuLOVbS//VkeYiMuYLFzoDAw5zEPq6hVQ==', 'Advanced', 'Beginner', 3200);
+
+INSERT INTO AspNetUsers (Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, 
+                        PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumberConfirmed, 
+                        TwoFactorEnabled, LockoutEnabled, AccessFailedCount)
+SELECT 
+    UserId,
+    Email,
+    UPPER(Email),
+    Email,
+    UPPER(Email),
+    1,
+    PasswordHash,
+    NEWID(),
+    NEWID(),
+    0,
+    0,
+    1,
+    0
+FROM @Users
+WHERE NOT EXISTS (SELECT 1 FROM AspNetUsers WHERE NormalizedEmail = UPPER(Email));
+
+CREATE TABLE #WorkoutSchedule (
+    DayOfWeek INT,
+    WorkoutType VARCHAR(20)
+);
+
+INSERT INTO #WorkoutSchedule VALUES 
+(1, 'Strength'),
+(2, 'Cardio'),
+(3, 'Strength'),
+(4, 'Cardio'),
+(5, 'Strength'),
+(6, 'Cardio'),
+(7, 'Rest');
+
+DECLARE @StartDate DATE = DATEADD(YEAR, -1, GETDATE());
+DECLARE @EndDate DATE = GETDATE();
+DECLARE @CurrentDate DATE = @StartDate;
+
+DECLARE user_cursor CURSOR FOR 
+SELECT UserId, StrengthLevel, CardioLevel, CalorieGoal 
+FROM @Users;
+
+DECLARE @CurrentUserId NVARCHAR(450);
+DECLARE @StrengthLevel VARCHAR(20);
+DECLARE @CardioLevel VARCHAR(20);
+DECLARE @CalorieGoal INT;
+
+OPEN user_cursor;
+FETCH NEXT FROM user_cursor INTO @CurrentUserId, @StrengthLevel, @CardioLevel, @CalorieGoal;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    SET @CurrentDate = @StartDate;
+    
+    WHILE @CurrentDate <= @EndDate
+    BEGIN
+        DECLARE @DayOfWeek INT = DATEPART(WEEKDAY, @CurrentDate);
+
+        IF EXISTS (SELECT 1 FROM #WorkoutSchedule WHERE DayOfWeek = @DayOfWeek AND WorkoutType = 'Strength')
+        BEGIN
+            DECLARE @BenchBase INT = CASE @StrengthLevel 
+                WHEN 'Beginner' THEN 95
+                WHEN 'Intermediate' THEN 185
+                ELSE 275
+            END;
+            
+            DECLARE @SquatBase INT = CASE @StrengthLevel
+                WHEN 'Beginner' THEN 135
+                WHEN 'Intermediate' THEN 225
+                ELSE 315
+            END;
+            
+            DECLARE @DeadliftBase INT = CASE @StrengthLevel
+                WHEN 'Beginner' THEN 185
+                WHEN 'Intermediate' THEN 275
+                ELSE 405
+            END;
+
+            INSERT INTO StrengthActivities (UserId, Date, ExerciseType, Notes)
+            VALUES (@CurrentUserId, @CurrentDate, 'Bench Press', 
+                    CASE @StrengthLevel
+                        WHEN 'Beginner' THEN 'Focusing on form'
+                        WHEN 'Intermediate' THEN 'Working on progression'
+                        ELSE 'Heavy day'
+                    END);
+            
+            DECLARE @BenchId INT = SCOPE_IDENTITY();
+            
+            INSERT INTO StrengthSets (StrengthActivityId, Reps, WeightLbs, IntensityLevel)
+            VALUES 
+                (@BenchId, CASE @StrengthLevel WHEN 'Beginner' THEN 12 ELSE 8 END, 
+                 @BenchBase + (ABS(CHECKSUM(NEWID())) % 20), 'Moderate'),
+                (@BenchId, CASE @StrengthLevel WHEN 'Beginner' THEN 10 ELSE 6 END, 
+                 @BenchBase + 20 + (ABS(CHECKSUM(NEWID())) % 20), 'High'),
+                (@BenchId, CASE @StrengthLevel WHEN 'Beginner' THEN 8 ELSE 4 END, 
+                 @BenchBase + 40 + (ABS(CHECKSUM(NEWID())) % 20), 'High');
+
+            INSERT INTO StrengthActivities (UserId, Date, ExerciseType, Notes)
+            VALUES (@CurrentUserId, @CurrentDate, 'Squats',
+                    CASE @StrengthLevel
+                        WHEN 'Beginner' THEN 'Learning proper depth'
+                        WHEN 'Intermediate' THEN 'Working on speed'
+                        ELSE 'Heavy volume day'
+                    END);
+            
+            DECLARE @SquatId INT = SCOPE_IDENTITY();
+            
+            INSERT INTO StrengthSets (StrengthActivityId, Reps, WeightLbs, IntensityLevel)
+            VALUES 
+                (@SquatId, CASE @StrengthLevel WHEN 'Beginner' THEN 12 ELSE 8 END, 
+                 @SquatBase + (ABS(CHECKSUM(NEWID())) % 30), 'Moderate'),
+                (@SquatId, CASE @StrengthLevel WHEN 'Beginner' THEN 10 ELSE 6 END, 
+                 @SquatBase + 30 + (ABS(CHECKSUM(NEWID())) % 30), 'High'),
+                (@SquatId, CASE @StrengthLevel WHEN 'Beginner' THEN 8 ELSE 4 END, 
+                 @SquatBase + 60 + (ABS(CHECKSUM(NEWID())) % 30), 'High');
+
+            INSERT INTO StrengthActivities (UserId, Date, ExerciseType, Notes)
+            VALUES (@CurrentUserId, @CurrentDate, 'Deadlifts',
+                    CASE @StrengthLevel
+                        WHEN 'Beginner' THEN 'Practicing form'
+                        WHEN 'Intermediate' THEN 'Building strength'
+                        ELSE 'Power day'
+                    END);
+            
+            DECLARE @DeadliftId INT = SCOPE_IDENTITY();
+            
+            INSERT INTO StrengthSets (StrengthActivityId, Reps, WeightLbs, IntensityLevel)
+            VALUES 
+                (@DeadliftId, CASE @StrengthLevel WHEN 'Beginner' THEN 10 ELSE 6 END, 
+                 @DeadliftBase + (ABS(CHECKSUM(NEWID())) % 40), 'Moderate'),
+                (@DeadliftId, CASE @StrengthLevel WHEN 'Beginner' THEN 8 ELSE 4 END, 
+                 @DeadliftBase + 40 + (ABS(CHECKSUM(NEWID())) % 40), 'High'),
+                (@DeadliftId, CASE @StrengthLevel WHEN 'Beginner' THEN 6 ELSE 2 END, 
+                 @DeadliftBase + 80 + (ABS(CHECKSUM(NEWID())) % 40), 'High');
+        END
+
+        IF EXISTS (SELECT 1 FROM #WorkoutSchedule WHERE DayOfWeek = @DayOfWeek AND WorkoutType = 'Cardio')
+        BEGIN
+            DECLARE @CardioType VARCHAR(20) = CASE WHEN @DayOfWeek IN (2, 6) THEN 'Running' ELSE 'Cycling' END;
+            
+            DECLARE @BaseDuration INT = CASE @CardioLevel
+                WHEN 'Beginner' THEN 20
+                WHEN 'Intermediate' THEN 40
+                ELSE 60
+            END;
+
+            DECLARE @BaseDistance FLOAT = CASE 
+                WHEN @CardioType = 'Running' THEN
+                    CASE @CardioLevel
+                        WHEN 'Beginner' THEN 2.0
+                        WHEN 'Intermediate' THEN 5.0
+                        ELSE 8.0
+                    END
+                ELSE
+                    CASE @CardioLevel
+                        WHEN 'Beginner' THEN 5.0
+                        WHEN 'Intermediate' THEN 15.0
+                        ELSE 25.0
+                    END
+            END;
+
+            INSERT INTO CardioActivities (UserId, Date, ActivityType, DurationMinutes, DistanceKm, 
+                                        IntensityLevel, Notes)
+            VALUES (
+                @CurrentUserId,
+                @CurrentDate,
+                @CardioType,
+                @BaseDuration + (ABS(CHECKSUM(NEWID())) % 20),
+                @BaseDistance + (ABS(CHECKSUM(NEWID())) % CAST(@BaseDistance * 0.2 AS INT)),
+                CASE @CardioLevel
+                    WHEN 'Beginner' THEN 'Low'
+                    WHEN 'Intermediate' THEN 'Moderate'
+                    ELSE 'High'
+                END,
+                CASE @CardioLevel
+                    WHEN 'Beginner' THEN 'Building endurance'
+                    WHEN 'Intermediate' THEN 'Tempo training'
+                    ELSE 'High intensity session'
+                END
+            );
+        END
+
+        IF @CalorieGoal > 0
+        BEGIN
+            INSERT INTO NutritionEntries (UserId, Date, TotalCalories, ProteinGrams, CarbsGrams, FatsGrams, Notes)
+            VALUES (
+                @CurrentUserId,
+                @CurrentDate,
+                @CalorieGoal + (ABS(CHECKSUM(NEWID())) % 300) - 150,
+                CASE @StrengthLevel
+                    WHEN 'Beginner' THEN 120
+                    WHEN 'Intermediate' THEN 160
+                    ELSE 200
+                END + (ABS(CHECKSUM(NEWID())) % 30),
+                CASE WHEN @CalorieGoal > 0 THEN (@CalorieGoal * 0.5) / 4 + (ABS(CHECKSUM(NEWID())) % 50) ELSE 0 END,
+                CASE WHEN @CalorieGoal > 0 THEN (@CalorieGoal * 0.25) / 9 + (ABS(CHECKSUM(NEWID())) % 20) ELSE 0 END,
+                CASE @StrengthLevel
+                    WHEN 'Beginner' THEN 'Following basic meal plan'
+                    WHEN 'Intermediate' THEN 'Balanced macro split'
+                    ELSE 'High protein diet'
+                END
+            );
+        END
+
+        SET @CurrentDate = DATEADD(DAY, 1, @CurrentDate);
+    END
+
+    FETCH NEXT FROM user_cursor INTO @CurrentUserId, @StrengthLevel, @CardioLevel, @CalorieGoal;
+END
+
+CLOSE user_cursor;
+DEALLOCATE user_cursor;
+
+DROP TABLE #WorkoutSchedule;
