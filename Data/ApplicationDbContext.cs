@@ -15,6 +15,7 @@ namespace MyFItness.Data
         public DbSet<StrengthSet> StrengthSets { get; set; }
         public DbSet<CardioActivity> CardioActivities { get; set; }
         public DbSet<NutritionEntry> NutritionEntries { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

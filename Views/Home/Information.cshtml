@@ -159,6 +159,12 @@
                 <option value="gain_strength">Gagner en force</option>
             </select>
             <div id="error-goal" class="error">Veuillez sélectionner votre objectif.</div>
+            <label for="entraineur">Etes vous entraineur :</label>
+            <select id="entraineur" asp-for="IsTrainer">
+                <option value="true">oui</option>
+                <option value="false" selected></option>
+            </select>
+
 
             <button type="submit" class="btn-orange">Suivant</button>
         </form>

@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<ApplicationUser>
+
+<Html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .users-list{
+            width: 20%;
+            overflow-y: scroll;
+            height: 100%;
+        }
+        .user-container{
+            height:20%;
+            border: 1px solid black;
+
+        }
+        .inbox-title{
+            align-content:center;
+        }
+        #container{
+            border-radius:5px;
+            border: 1px solid black;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+    
+</head>
+
+<body>
+    <div id="container">
+    <div class="users-list">
+        <h1 class="inbox-title">Inbox</h1>
+        @foreach (var user in Model)
+        {
+            <div class="user-container">
+                <span class="avatar-text avatar-text-primary rounded-circle"><span class="initial-wrap"><span>@user.FirstName.Substring(0, 1).ToUpper() @user.FirstName.Substring(0, 1).ToUpper()</span></span>
+            <h3 class="user-names">@user.FirstName</h3>
+        </div>
+        }
+    </div>
+    </div>
+</body>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
+
+
+</Html>

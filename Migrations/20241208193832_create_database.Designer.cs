@@ -9,11 +9,11 @@ using MyFItness.Data;
 
 #nullable disable
 
-namespace MyFItness.Data.Migrations
+namespace MyFItness.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241205210825_UpdateUserFields")]
-    partial class UpdateUserFields
+    [Migration("20241208193832_create_database")]
+    partial class create_database
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,7 +173,7 @@ namespace MyFItness.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -184,25 +184,21 @@ namespace MyFItness.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FitnessGoal")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("HeightCm")
+                    b.Property<double?>("HeightCm")
                         .HasColumnType("float");
 
                     b.Property<bool>("IsTrainer")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -238,7 +234,7 @@ namespace MyFItness.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<double>("WeightLbs")
+                    b.Property<double?>("WeightLbs")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -292,6 +288,30 @@ namespace MyFItness.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("CardioActivities");
+                });
+
+            modelBuilder.Entity("MyFItness.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReceiverId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("MyFItness.Models.NutritionEntry", b =>
